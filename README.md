@@ -1,1 +1,5 @@
-# Ara_Poly_Rooting_Vector
+# Ara_Poly_Rooting
+
+Dara Oseyemi
+Manya Zhu
+Mukund Ramakrishnan
