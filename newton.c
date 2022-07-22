@@ -64,6 +64,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     double a_n [poly.degree + 1];
     polyDeriv.coefficients = a_n;
     derivative(poly, &polyDeriv);
+    printf("test -1.5\n");
 
     int i = 0;
     while (poly.degree > 0) {
