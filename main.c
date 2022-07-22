@@ -24,8 +24,8 @@ int main() {
     double roots [poly.degree];
     start_timer();
     newton(poly, roots, crit_conversion);
-    end_timer();
-    int64_t cycle_time = get_timer()
+    stop_timer();
+    int64_t cycle_time = get_timer();
 
     if (roots[0] == DBL_MAX) {
         printf("Your polynomial has no real roots.\n");
