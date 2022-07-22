@@ -15,7 +15,7 @@ Polynomial_t derivative(Polynomial_t myPoly) {
 
     //create new polynomial to represent the differentiated polynomial
     Polynomial_t differentiatedPoly;
-    double differentiatedPoly->coefficients [myPoly.degree];
+    double differentiatedPoly.coefficients [myPoly.degree];
     
     //initialize degree
     differentiatedPoly->degree = myPoly.degree - 1;
