@@ -8,7 +8,7 @@
 
 /*--------------------------------------------------------------------*/
 
-double* horner(Polynomial_t poly, double* x, int guessSize) {
+double* horner(Polynomial_t poly, double* guesses, int guessSize) {
   
     double* solution [guessSize]; 
 
