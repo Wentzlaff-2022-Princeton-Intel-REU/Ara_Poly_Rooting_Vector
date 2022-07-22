@@ -21,8 +21,9 @@ int main(int argc, char *argv[]) {
     printf("Polynomial:\n");
     printPoly(poly);
 
+    double roots [poly.degree];
     start_timer();
-    double* roots = newton(poly, crit_conversion);
+    newton(poly, roots, crit_conversion);
     end_timer();
 
     if (roots[0] == DBL_MAX) {

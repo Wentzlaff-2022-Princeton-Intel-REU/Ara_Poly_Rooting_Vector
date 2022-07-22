@@ -11,15 +11,7 @@
 /* This is a root-finding program that will take the derivative of a polynomial. 
 It depends on what the structure is. */
 
-Polynomial_t derivative(Polynomial_t myPoly) {
-
-    //create new polynomial to represent the differentiated polynomial
-    Polynomial_t differentiatedPoly;
-    double differentiatedPoly.coefficients [myPoly.degree];
-    
-    //initialize degree
-    differentiatedPoly.degree = myPoly.degree - 1;
-
+void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
     //active vector length is the degree of the original polynomial
     size_t avl = myPoly.degree;
 
@@ -55,7 +47,6 @@ Polynomial_t derivative(Polynomial_t myPoly) {
         results += vl;
     }
 
-    indices -= myPoly.degree;
-
-    return differentiatedPoly;
+    //initialize degree
+    differentiatedPoly.degree = myPoly.degree - 1;
 }

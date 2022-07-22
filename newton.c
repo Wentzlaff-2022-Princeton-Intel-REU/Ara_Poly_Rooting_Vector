@@ -6,11 +6,11 @@
 #include <math.h>
 #include <riscv_vector.h>
 #include <stdbool.h>
-#include "printf.h"
-#include "longDiv.h"
 #include "derivative.h"
 #include "horner.h"
+#include "longDiv.h"
 #include "newton.h"
+#include "printf.h"
 
 /*--------------------------------------------------------------------*/
 
@@ -24,9 +24,7 @@ static int compare(const void * a, const void * b) {
     return 0;  
 }
 
-double* newton(Polynomial_t poly, double convCrit) {
-    double roots [poly.degree];
-
+void newton(Polynomial_t poly, double* roots, double convCrit) {
     for (int i = 0; i < poly.degree; i++) {
       roots[i] = DBL_MAX;
     }
@@ -55,18 +53,23 @@ double* newton(Polynomial_t poly, double convCrit) {
     vc = vle64_v_f64m1(xGuess, guessSize);
     vd = vfmv_v_f_f64m1(0, guessSize);
 
-    Polynomial_t newPoly = poly;
-    Polynomial_t polyDeriv = derivative(poly);
+    // Polynomial_t newPoly = poly;
+    Polynomial_t polyDeriv;
+    double a_n [poly.degree + 1];
+    polyDeriv.coefficients = a_n;
+    derivative(poly, &polyDeriv);
 
     int i = 0;
-    while (newPoly.degree > 0) {
+    while (poly.degree > 0) {
         // bool cond = true;
         long cond1 = 0;
         bool firstLoop = true;
         do {
             // bool noRoots = true;
-            double* polyGuess = horner(newPoly, xGuess, guessSize);
-            double* polyDerivGuess = horner(polyDeriv, xGuess, guessSize);
+            double polyGuess [guessSize];
+            double polyDerivGuess [guessSize];
+            horner(poly, xGuess, poyGuess, guessSize);
+            horner(polyDeriv, xGuess, polyDerivGuess, guessSize);
 
             vfloat64m1_t ve, vf, ones;
             ones = vfmv_v_f_f64m1(1, guessSize);
@@ -109,6 +112,7 @@ double* newton(Polynomial_t poly, double convCrit) {
             long noRoots1 = vfirst_m_b64(vmnot_m_b64(vb3, guessSize), guessSize);
 
             if (!firstLoop && noRoots1 == -1) {
+                qsort(roots, poly.degree, sizeof(double), compare);
                 return roots;
             }
 
@@ -121,22 +125,17 @@ double* newton(Polynomial_t poly, double convCrit) {
 
             firstLoop = false;
         } while (cond1 == -1);
-        //freePoly(&newPoly);
-        //freePoly(&polyDeriv);
 
         for (int j = 0; j < guessSize; j++) {
-            int degree = newPoly.degree;
-            newPoly = longDiv(newPoly, xGuess[j], convCrit);
+            int degree = poly.degree;
+            longDiv(&poly, a_n, xGuess[j], convCrit);
 
-            if (degree != newPoly.degree) {
+            if (degree != poly.degree) {
                 roots[i] = xGuess[j];
                 i++;
             }
         }
-        polyDeriv = derivative(newPoly);
+        derivative(poly, &polyDeriv);
     }
-
     qsort(roots, poly.degree, sizeof(double), compare);
-    
-    return roots;
 }

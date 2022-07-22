@@ -3,23 +3,20 @@
 /*--------------------------------------------------------------------*/
 
 #include <riscv_vector.h>
-#include "printf.h"
 #include "horner.h"
+#include "printf.h"
 
 /*--------------------------------------------------------------------*/
 
-double* horner(Polynomial_t poly, double* guesses, int guessSize) {
-  
-    double* solution [guessSize]; 
-
+void horner(Polynomial_t poly, double* guesses, double* solutions, int guessSize) {
     // declare vector registers
-    vfloat64m1_t va, vb, vSolution;
+    vfloat64m1_t va, vb, vSolutions;
 
     size_t avl = guessSize;
 
     for (size_t vl; (vl = vsetvl_e32m1(avl)) > 0; avl -= vl) {
-        // Filling the vector vSolution with the highest coefficient(s)
-        vSolution = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
+        // Filling the vector vSolutions with the highest coefficient(s)
+        vSolutions = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
 
         // This is the vector with our guesses (x vector).
         vb = vle64_v_f64m1(x, vl); 
@@ -30,14 +27,12 @@ double* horner(Polynomial_t poly, double* guesses, int guessSize) {
             va = vfmv_v_f_f64m1(poly.coefficients[i-1], vl); 
 
             // We are multiply-adding this along with the x vector (our guesses).
-            vSolution = vfmadd_vv_f64m1(vSolution, vb, va, vl); 
+            vSolutions = vfmadd_vv_f64m1(vSolutions, vb, va, vl); 
         }
 
-        // We are storing our results in the solution array.
-        vse64_v_f64m1(&solution[guessSize - avl], vSolution, vl);
-    } 
-
-    return solution;
+        // We are storing our results in the solutions array.
+        vse64_v_f64m1(&solutions[guessSize - avl], vSolutions, vl);
+    }
 }
 
 
