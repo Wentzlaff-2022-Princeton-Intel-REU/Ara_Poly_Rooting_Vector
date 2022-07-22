@@ -29,11 +29,13 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     for (int i = 0; i < poly.degree; i++) {
       roots[i] = DBL_MAX;
     }
+    printf("test -1.0\n");
 
     int guessSize = 8;
     if (poly.degree < 8) {
         guessSize = poly.degree;
     }
+    printf("test -1.1\n");
 
     double xGuess [guessSize];
     // double* oldXGuess [guessSize];
@@ -41,6 +43,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     // double* oldDiff [guessSize];
 
     vfloat64m1_t va, vb, vc, vd;
+    printf("test -1.2\n");
 
     for (int i = 0; i < guessSize; i++){
         xGuess[i] = (double) rand() / (double) rand();
@@ -48,11 +51,13 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         // diff[i] = xGuess[i];
         // oldDiff[i] = 0;
     }
+    printf("test -1.3\n");
 
     va = vle64_v_f64m1(xGuess, guessSize);
     vb = vfmv_v_f_f64m1(0, guessSize);
     vc = vle64_v_f64m1(xGuess, guessSize);
     vd = vfmv_v_f_f64m1(0, guessSize);
+    printf("test -1.4\n");
 
     // Polynomial_t newPoly = poly;
     Polynomial_t polyDeriv;

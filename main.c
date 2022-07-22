@@ -21,7 +21,7 @@ int main() {
     printf("Polynomial:\n");
     printPoly(poly);
 
-    double roots [poly.degree];
+    double roots[poly.degree];
     start_timer();
     newton(poly, roots, crit_conversion);
     stop_timer();
