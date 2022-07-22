@@ -5,6 +5,7 @@
 #include <float.h>
 #include <math.h>
 #include <riscv_vector.h>
+// #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include "derivative.h"
@@ -70,19 +71,20 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     int i = 0;
     printf("test -1.5 %d\n", poly.degree);
     while (poly.degree > 0) {
-        printf("test 0\n");
+        printf("test -1.5 %d\n", poly.degree);
+        // printf("test 0\n");
         // bool cond = true;
         long cond1 = 0;
         bool firstLoop = true;
         do {
-            printf("test 1\n");
+            // printf("test 1\n");
             // bool noRoots = true;
-            double polyGuess [guessSize];
-            double polyDerivGuess [guessSize];
+            double polyGuess[guessSize];
+            double polyDerivGuess[guessSize];
             horner(poly, xGuess, polyGuess, guessSize);
             horner(polyDeriv, xGuess, polyDerivGuess, guessSize);
 
-            printf("test 2\n");
+            // printf("test 2\n");
             vfloat64m1_t ve, vf, ones;
             ones = vfmv_v_f_f64m1(1, guessSize);
             ve = vle64_v_f64m1(polyGuess, guessSize);
@@ -102,7 +104,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             vc = vfabs_v_f64m1(vfsub_vv_f64m1(va, vb, guessSize), guessSize);
 
             vse64_v_f64m1(xGuess, va, guessSize);  
-            printf("test 3\n");
+            // printf("test 3\n");
 
             // printf("guess: %lf, diff: %lf\n", xGuess, fabs(xGuess - oldXGuess));
 
@@ -124,7 +126,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             vb3 = vmand_mm_b64(vb1, vb2, guessSize);
             long noRoots1 = vfirst_m_b64(vmnot_m_b64(vb3, guessSize), guessSize);
 
-            printf("test 4\n");
+            // printf("test 4\n");
             if (!firstLoop && noRoots1 == -1) {
                 printf("exit to early\n");
                 qsort(roots, n, sizeof(double), compare);
@@ -141,18 +143,23 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             firstLoop = false;
         } while (cond1 == -1);
 
-        printf("test 5\n");
+        // printf("test 5\n");
         for (int j = 0; j < guessSize; j++) {
+            // printf("Guesses: %.3f\n", xGuess[j]);
             int degree = poly.degree;
             longDiv(&poly, a_n, xGuess[j], convCrit);
 
             if (degree != poly.degree) {
-                printf("test 6\n");
+                // printf("test 6\n");
                 roots[i] = xGuess[j];
                 i++;
             }
         }
-        printf("test 7\n");
+        // for (int j = 0; j < i; j++) {
+        //     printf("Roots: %.3f\n", roots[j]);
+        // }
+
+        // printf("test 7\n");
         derivative(poly, &polyDeriv);
     }
     qsort(roots, n, sizeof(double), compare);

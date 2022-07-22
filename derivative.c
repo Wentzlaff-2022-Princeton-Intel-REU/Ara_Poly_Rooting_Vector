@@ -3,6 +3,7 @@
 /*--------------------------------------------------------------------*/
 
 #include <riscv_vector.h>
+// #include <stdio.h>
 #include "derivative.h"
 #include "printf.h"
 

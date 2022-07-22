@@ -3,6 +3,7 @@
 /*--------------------------------------------------------------------*/
 
 #include <math.h>
+// #include <stdio.h>
 #include "longDiv.h"
 #include "printf.h"
 
@@ -14,8 +15,8 @@ void longDiv(Polynomial_t* poly, double* a_n, double root, double diff) {
         a_n[i - 1] = poly->coefficients[i] + root * a_n[i];
     }
 
-    // printf("root: %.16lf, diff: %.16lf\n", root, (poly->coefficients[0] + root * a_n[0]));
-    if (fabs(poly->coefficients[0] + root * a_n[0]) > diff) {
+    // printf("root: %.16lf, diff: %.16lf\n", root, fabs(poly->coefficients[0] + root * a_n[0]));
+    if (fabs(poly->coefficients[0] + root * a_n[0]) > (diff * 10)) {
         return;
     }
 
