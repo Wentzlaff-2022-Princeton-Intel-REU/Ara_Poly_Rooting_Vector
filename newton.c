@@ -69,7 +69,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
     int i = 0;
     printf("test -1.5 %d\n", poly.degree);
-    do {
+    while (poly.degree > 0) {
         printf("test 0\n");
         // bool cond = true;
         long cond1 = 0;
@@ -154,6 +154,6 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         }
         printf("test 7\n");
         derivative(poly, &polyDeriv);
-    } while (poly.degree > 0);
+    }
     qsort(roots, n, sizeof(double), compare);
 }
