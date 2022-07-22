@@ -10,7 +10,7 @@
 
 /*--------------------------------------------------------------------*/
 
-int main(int argc, char *argv[]) {
+int main() {
     double crit_conversion = 1e-14;
     
     Polynomial_t poly;
@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
     start_timer();
     newton(poly, roots, crit_conversion);
     end_timer();
+    int64_t cycle_time = get_timer()
 
     if (roots[0] == DBL_MAX) {
         printf("Your polynomial has no real roots.\n");
