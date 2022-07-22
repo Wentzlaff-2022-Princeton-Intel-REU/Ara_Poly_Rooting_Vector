@@ -10,7 +10,7 @@
 
 Polynomial_t longDiv(Polynomial_t poly, double root, double diff) {
     int n = poly.degree - 1;
-    double* a_n [n + 1];
+    double a_n [n + 1];
 
     a_n[n] = poly.coefficients[n + 1];
     for (int i = n; i > 0; i--) {
