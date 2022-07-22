@@ -25,7 +25,7 @@ static int compare(const void * a, const void * b) {
 }
 
 double* newton(Polynomial_t poly, double convCrit) {
-    double* roots [poly.degree];
+    double roots [poly.degree];
 
     for (int i = 0; i < poly.degree; i++) {
       roots[i] = DBL_MAX;
@@ -36,7 +36,7 @@ double* newton(Polynomial_t poly, double convCrit) {
         guessSize = poly.degree;
     }
 
-    double* xGuess [guessSize];
+    double xGuess [guessSize];
     // double* oldXGuess [guessSize];
     // double* diff [guessSize];
     // double* oldDiff [guessSize];
