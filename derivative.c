@@ -17,12 +17,12 @@ void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
 
     //pointers for the resulting coefficients (after taking the derivative) and the
     //original coefficients
-    double* results = differentiatedPoly.coefficients;
+    double* results = differentiatedPoly->coefficients;
     double* coeffs = myPoly.coefficients + 1; //the constant at index 0 is not included in the derivative
 
     //array that just holds 1 to n, where n is the degree of the original polynomial.
     //this represents the exponents of the polynomial
-    double indices [myPoly.degree];
+    double* indices;
 
     for(int i = 0; i < myPoly.degree; i++){
         indices[i] = i + 1;
@@ -48,5 +48,5 @@ void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
     }
 
     //initialize degree
-    differentiatedPoly.degree = myPoly.degree - 1;
+    differentiatedPoly->degree = myPoly.degree - 1;
 }
