@@ -69,7 +69,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             // bool noRoots = true;
             double polyGuess [guessSize];
             double polyDerivGuess [guessSize];
-            horner(poly, xGuess, ployGuess, guessSize);
+            horner(poly, xGuess, polyGuess, guessSize);
             horner(polyDeriv, xGuess, polyDerivGuess, guessSize);
 
             vfloat64m1_t ve, vf, ones;
