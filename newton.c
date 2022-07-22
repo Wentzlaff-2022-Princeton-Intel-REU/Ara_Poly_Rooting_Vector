@@ -5,6 +5,7 @@
 #include <float.h>
 #include <math.h>
 #include <riscv_vector.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include "derivative.h"
 #include "horner.h"
@@ -68,7 +69,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             // bool noRoots = true;
             double polyGuess [guessSize];
             double polyDerivGuess [guessSize];
-            horner(poly, xGuess, poyGuess, guessSize);
+            horner(poly, xGuess, ployGuess, guessSize);
             horner(polyDeriv, xGuess, polyDerivGuess, guessSize);
 
             vfloat64m1_t ve, vf, ones;
@@ -113,7 +114,6 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
             if (!firstLoop && noRoots1 == -1) {
                 qsort(roots, poly.degree, sizeof(double), compare);
-                return roots;
             }
 
             // cond = diff[0] > convCrit && diff[1] > convCrit;
