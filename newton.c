@@ -26,14 +26,16 @@ static int compare(const void * a, const void * b) {
 }
 
 void newton(Polynomial_t poly, double* roots, double convCrit) {
-    for (int i = 0; i < poly.degree; i++) {
+    int n = poly.degree;
+
+    for (int i = 0; i < n; i++) {
       roots[i] = DBL_MAX;
     }
     printf("test -1.0\n");
 
     int guessSize = 8;
-    if (poly.degree < 8) {
-        guessSize = poly.degree;
+    if (n < 8) {
+        guessSize = n;
     }
     printf("test -1.1\n");
 
@@ -61,10 +63,10 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
     // Polynomial_t newPoly = poly;
     Polynomial_t polyDeriv;
-    double a_n [poly.degree + 1];
+    double a_n [n + 1];
     polyDeriv.coefficients = a_n;
     derivative(poly, &polyDeriv);
-    printf("test -1.5\n");
+    printf("test -1.5 %d\n", poly.degree);
 
     int i = 0;
     while (poly.degree > 0) {
@@ -125,7 +127,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             printf("test 4\n");
             if (!firstLoop && noRoots1 == -1) {
                 printf("exit to early\n");
-                qsort(roots, poly.degree, sizeof(double), compare);
+                qsort(roots, n, sizeof(double), compare);
                 return;
             }
 
@@ -153,5 +155,5 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         printf("test 7\n");
         derivative(poly, &polyDeriv);
     }
-    qsort(roots, poly.degree, sizeof(double), compare);
+    qsort(roots, n, sizeof(double), compare);
 }
