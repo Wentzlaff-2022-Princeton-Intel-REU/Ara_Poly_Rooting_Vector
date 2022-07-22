@@ -48,5 +48,5 @@ void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
     }
 
     //initialize degree
-    differentiatedPoly.degree = myPoly.degree - 1;
+    differentiatedPoly->degree = myPoly.degree - 1;
 }
