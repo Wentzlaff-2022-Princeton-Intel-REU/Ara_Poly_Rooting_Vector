@@ -67,10 +67,6 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         do {
             // printf("test 1\n");
             // bool noRoots = true;
-            double polyGuess[guessSize];
-            double polyDerivGuess[guessSize];
-            horner(poly, guesses, polyGuess, guessSize);
-            horner(polyDeriv, guesses, polyDerivGuess, guessSize);
 
             // printf("test 2\n");
             vfloat64m1_t polyGuess, polyDerivGuess;
@@ -134,9 +130,9 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         // printf("test 5\n");
         vse64_v_f64m1(guesses, vGuesses, guessSize);
         bool notFinite = false;
-        for (int j = 0; j < guessSize; j++) {
+        for (size_t j = 0; j < guessSize; j++) {
             int degree = poly.degree;
-            poly = longDiv(poly, guesses[j], convCrit);
+            longDiv(&poly, a_n, guesses[j], convCrit);
 
             if (degree != poly.degree) {
                 roots[rootIndex] = guesses[j];

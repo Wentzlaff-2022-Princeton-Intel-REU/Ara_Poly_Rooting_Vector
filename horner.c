@@ -9,7 +9,7 @@
 
 /*--------------------------------------------------------------------*/
 
-vfloat64m1_t horner(Polynomial_t poly, double* vGuesses, int guessSize) {
+vfloat64m1_t horner(Polynomial_t poly, vfloat64m1_t vGuesses, size_t guessSize) {
     vfloat64m1_t currCoeff, vGuesses, solutions;
 
     for (size_t vl; (vl = vsetvl_e32m1(guessSize)) > 0; guessSize -= vl) {
