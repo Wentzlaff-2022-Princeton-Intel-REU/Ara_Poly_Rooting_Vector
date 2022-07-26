@@ -125,7 +125,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             }
 
             firstLoop = false;
-        } while (vfirst_m_b64(vmnot_m_b64(vb4, guessSize), guessSize) == -1);
+        } while (true);
 
         // printf("test 5\n");
         vse64_v_f64m1(guesses, vGuesses, guessSize);
