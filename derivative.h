@@ -7,8 +7,7 @@
 
 /*------------------------------------------------------------*/
 
-/* The differentiatePoly function takes in a Polynomial_t
-object as input, differentiates it, and returns a differentiated
-Polynomial_t object as output. */
+/* The derivative function takes in a Polynomial_t
+object as input and set differentiatedPoly to its derivative. */
 void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly);
 

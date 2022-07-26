@@ -5,49 +5,41 @@
 #include <riscv_vector.h>
 // #include <stdio.h>
 #include "derivative.h"
-#include "printf.h"
 
 /*--------------------------------------------------------------------*/
 
-/* This is a root-finding program that will take the derivative of a polynomial. 
-It depends on what the structure is. */
-
 void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
-    //active vector length is the degree of the original polynomial
-    size_t avl = myPoly.degree;
-
-    //pointers for the resulting coefficients (after taking the derivative) and the
-    //original coefficients
+    // pointers for the resulting coefficients (after taking the derivative) and the
+    // original coefficients
+    differentiatedPoly->degree = myPoly.degree - 1;
     double* results = differentiatedPoly->coefficients;
-    double* coeffs = myPoly.coefficients + 1; //the constant at index 0 is not included in the derivative
+    double* coeffs = myPoly.coefficients + 1; // the constant at index 0 is not included in the derivative
 
-    //array that just holds 1 to n, where n is the degree of the original polynomial.
-    //this represents the exponents of the polynomial
+    // array that just holds 1 to n, where n is the degree of the original polynomial.
+    // this represents the exponents of the polynomial
     double indices[myPoly.degree];
-
     for(int i = 0; i < myPoly.degree; i++){
         indices[i] = i + 1;
     }
 
-    //declare vector registers
-    vfloat64m1_t va, vb, vc;
+    //active vector length is the degree of the original polynomial
+    size_t avl = myPoly.degree;
+    // declare vector registers
+    vfloat64m1_t vCoeffs, vIndices, vResults;
 
     for (size_t vl; (vl = vsetvl_e64m1(avl)) > 0; avl -= vl) {
-        //load in original coefficients into va
-        va = vle64_v_f64m1(coeffs, vl);
-        //load in array of exponents
-        vb = vle64_v_f64m1(indices, vl);
-        //multiply the two and put the result in vc
-        vc = vfmul_vv_f64m1(va, vb, vl);
-        //store the resulting coefficients into our differentiated polynomial
-        vse64_v_f64m1(results, vc, vl);
+        // load in original coefficients into vCoeffs
+        vCoeffs = vle64_v_f64m1(coeffs, vl);
+        // load in array of exponents
+        vIndices = vle64_v_f64m1(indices, vl);
+        // multiply the two and put the result in vResults
+        vResults = vfmul_vv_f64m1(vCoeffs, vIndices, vl);
+        // store the resulting coefficients into our differentiated polynomial
+        vse64_v_f64m1(results, vResults, vl);
 
-        //move the pointers
+        // move the pointers
         coeffs += vl;
         *indices += vl;
         results += vl;
     }
-
-    //initialize degree
-    differentiatedPoly->degree = myPoly.degree - 1;
 }

@@ -12,23 +12,23 @@
 /*--------------------------------------------------------------------*/
 
 int main() {
-    double crit_conversion = 1e-14;
-    
     Polynomial_t poly;
     poly.degree = 5;
     double arr[] = {120, 94, -51, -23, 3, 1};
     poly.coefficients = arr;
 
+    double roots[poly.degree];
+    double crit_conversion = 1e-14;
+
     printf("Polynomial:\n");
     printPoly(poly);
 
-    double roots[poly.degree];
     start_timer();
     newton(poly, roots, crit_conversion);
     stop_timer();
     int64_t cycle_time = get_timer();
 
-    if (roots[0] == DBL_MAX) {
+    if (poly.degree == 0 || roots[0] == DBL_MAX) {
         printf("Your polynomial has no real roots.\n");
     }
     else {
