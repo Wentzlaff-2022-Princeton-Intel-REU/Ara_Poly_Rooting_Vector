@@ -44,9 +44,13 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     printf("test -1.2\n");
 
     vfloat64m1_t vGuesses, vOldGuesses, vDiff, vOldDiff;
+    printf("test -1.2.1\n");
     vGuesses = vfcvt_f_xu_v_f64m1(vid_v_u64m1(guessSize), guessSize);
+    printf("test -1.2.2\n");
     vOldGuesses = vfmv_v_f_f64m1(0, guessSize);
+    printf("test -1.2.3\n");
     vDiff = vGuesses;
+    printf("test -1.2.4\n");
     vOldDiff = vOldGuesses;
     printf("test -1.3\n");
 
