@@ -100,7 +100,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
             // move the pointers
             coeffs += vl;
-            *indices += vl;
+            indices += vl;
             results += vl;
         }
 
