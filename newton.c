@@ -80,8 +80,11 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
             // printf("test 2\n");
             vfloat64m1_t polyGuess, polyDerivGuess;
+            printf("test -1.7\n");
             polyGuess = horner(poly, vGuesses, guessSize);
+            printf("test -1.8\n");
             polyDerivGuess = horner(polyDeriv, vGuesses, guessSize);
+            printf("test -1.9\n");
 
             // for (int j = 0; j < 2; j++) {
             //     oldXGuess[j] = xGuess[j];
@@ -94,6 +97,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             vGuesses = vfsub_vv_f64m1(vGuesses, vfdiv_vv_f64m1(polyGuess, polyDerivGuess, guessSize), guessSize);
             vOldDiff = vmv_v_v_f64m1(vDiff, guessSize);
             vDiff = vfabs_v_f64m1(vfsub_vv_f64m1(vGuesses, vOldGuesses, guessSize), guessSize);
+            printf("test -1.10\n");
 
             // printf("test 3\n");
 
