@@ -204,12 +204,12 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
             a_n[poly.degree - 1] = poly.coefficients[poly.degree];
             for (int i = poly.degree - 1; i > 0; i--) {
-                a_n[i - 1] = poly.coefficients[i] + root * a_n[i];
+                a_n[i - 1] = poly.coefficients[i] + guesses[j] * a_n[i];
             }
 
             bool isRoot = true;
-            // printf("root: %.16lf, diff: %.16lf\n", root, fabs(poly.coefficients[0] + root * a_n[0]));
-            if (!isfinite(root) || fabs(poly.coefficients[0] + root * a_n[0]) > (diff * 10)) {
+            // printf("guesses[j]: %.16lf, convCrit: %.16lf\n", guesses[j], fabs(poly.coefficients[0] + guesses[j] * a_n[0]));
+            if (!isfinite(guesses[j]) || fabs(poly.coefficients[0] + guesses[j] * a_n[0]) > convCrit) {
                 isRoot = false;
             }
 

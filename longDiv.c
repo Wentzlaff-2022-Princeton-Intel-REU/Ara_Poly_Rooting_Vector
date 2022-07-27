@@ -16,7 +16,7 @@ void longDiv(Polynomial_t* poly, double* a_n, double root, double diff) {
     }
 
     // printf("root: %.16lf, diff: %.16lf\n", root, fabs(poly->coefficients[0] + root * a_n[0]));
-    if (!isfinite(root) || fabs(poly->coefficients[0] + root * a_n[0]) > (diff * 10)) {
+    if (!isfinite(root) || fabs(poly->coefficients[0] + root * a_n[0]) > diff) {
         return;
     }
 
