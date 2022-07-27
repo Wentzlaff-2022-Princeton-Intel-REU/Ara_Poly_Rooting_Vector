@@ -37,6 +37,9 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     printf("test -1.1\n");
 
     double guesses[guessSize];
+    for (int i = 0; i < guessSize; i++) {
+        guesses[i] = (rand() % 11) - 5;
+    }
     // double* oldXGuess[guessSize];
     // double* diff[guessSize];
     // double* oldDiff[guessSize];
@@ -45,10 +48,10 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
     vfloat64m1_t vGuesses, vOldGuesses, vDiff, vOldDiff;
     printf("test -1.2.1\n");
-    vuint64m1_t test = vid_v_u64m1(guessSize);
-    vfloat64m1_t test2 = vreinterpret_v_u64m1_f64m1(test);
-    printf("test -1.2.1.1\n");
-    vGuesses = vfcvt_f_xu_v_f64m1(vid_v_u64m1(guessSize), guessSize);
+    // vuint64m1_t test = vid_v_u64m1(guessSize);
+    // vfloat64m1_t test2 = vreinterpret_v_u64m1_f64m1(test);
+    // printf("test -1.2.1.1\n");
+    vGuesses = vle64_v_f64m1(guesses, guessSize);
     printf("test -1.2.2\n");
     vOldGuesses = vfmv_v_f_f64m1(0, guessSize);
     printf("test -1.2.3\n");
