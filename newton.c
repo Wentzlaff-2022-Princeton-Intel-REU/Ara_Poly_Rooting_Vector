@@ -69,11 +69,11 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     int rootIndex = 0;
     printf("test -1.5 %d\n", poly.degree);
     while (poly.degree > 0) {
-        printf("test -1.5 %d\n", poly.degree);
         // printf("test 0\n");
         // bool cond = true;
         // long cond = 0;
         bool firstLoop = true;
+        printf("test -1.6\n");
         do {
             // printf("test 1\n");
             // bool noRoots = true;
