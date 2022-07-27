@@ -37,7 +37,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     // printf("test -1.1\n");
 
     double guesses[guessSize];
-    for (int i = 0; i < guessSize; i++) {
+    for (size_t i = 0; i < guessSize; i++) {
         guesses[i] = (rand() % 11) - 5;
     }
     // double* oldXGuess[guessSize];
