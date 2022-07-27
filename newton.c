@@ -64,11 +64,46 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     double a_n[n + 1];
     polyDeriv.coefficients = a_n;
     // printf("test -1.4\n");
-    derivative(poly, &polyDeriv);
 
     int rootIndex = 0;
     // printf("test -1.5\n");
     while (poly.degree > 0) {
+        // derivative(poly, &polyDeriv);
+
+        // pointers for the resulting coefficients (after taking the derivative) and the
+        // original coefficients
+        polyDeriv.degree = poly.degree - 1;
+        double* results = polyDeriv.coefficients;
+        double* coeffs = poly.coefficients + 1; // the constant at index 0 is not included in the derivative
+
+        // array that just holds 1 to n, where n is the degree of the original polynomial.
+        // this represents the exponents of the polynomial
+        double indices[poly.degree];
+        for(int i = 0; i < poly.degree; i++){
+            indices[i] = i + 1;
+        }
+
+        //active vector length is the degree of the original polynomial
+        size_t avl = poly.degree;
+        // declare vector registers
+        vfloat64m1_t vCoeffs, vIndices, vResults;
+
+        for (size_t vl; (vl = vsetvl_e64m1(avl)) > 0; avl -= vl) {
+            // load in original coefficients into vCoeffs
+            vCoeffs = vle64_v_f64m1(coeffs, vl);
+            // load in array of exponents
+            vIndices = vle64_v_f64m1(indices, vl);
+            // multiply the two and put the result in vResults
+            vResults = vfmul_vv_f64m1(vCoeffs, vIndices, vl);
+            // store the resulting coefficients into our differentiated polynomial
+            vse64_v_f64m1(results, vResults, vl);
+
+            // move the pointers
+            coeffs += vl;
+            *indices += vl;
+            results += vl;
+        }
+
         // printf("test 0\n");
         // bool cond = true;
         // long cond = 0;
@@ -81,9 +116,29 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             // printf("test 2\n");
             vfloat64m1_t polyGuess, polyDerivGuess;
             // printf("test -1.7\n");
-            polyGuess = horner(poly, vGuesses, guessSize);
+            // polyGuess = horner(poly, vGuesses, guessSize);
             // printf("test -1.8\n");
-            polyDerivGuess = horner(polyDeriv, vGuesses, guessSize);
+            // polyDerivGuess = horner(polyDeriv, vGuesses, guessSize);
+
+            vfloat64m1_t currCoeff, currCoeffDeriv;
+
+            for (size_t vl; (vl = vsetvl_e32m1(guessSize)) > 0; guessSize -= vl) {
+                // filling the vector solutions with the coefficient of the high degree
+                polyGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
+                polyDerivGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
+
+                for (int i = poly.degree; i > 0; i--){
+                    /* moves g one of the polynomial's coefficients
+                    (starting with the coefficient of the second high degree and
+                    moving to that of the lowest degree) to a vector */
+                    currCoeff = vfmv_v_f_f64m1(poly.coefficients[i-1], vl);
+                    currCoeffDeriv = vfmv_v_f_f64m1(poly.coefficients[i-1], vl); 
+                    // solutions += vGuesses * currCoeff
+                    polyGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, vl);
+                    polyDerivGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, vl);
+                }
+            }
+
             // printf("test -1.9\n");
 
             // for (int j = 0; j < 2; j++) {
@@ -145,7 +200,25 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         bool notFinite = false;
         for (size_t j = 0; j < guessSize; j++) {
             int degree = poly.degree;
-            longDiv(&poly, a_n, guesses[j], convCrit);
+            // longDiv(&poly, a_n, guesses[j], convCrit);
+
+            a_n[poly.degree - 1] = poly.coefficients[poly.degree];
+            for (int i = poly.degree - 1; i > 0; i--) {
+                a_n[i - 1] = poly.coefficients[i] + root * a_n[i];
+            }
+
+            bool isRoot = true;
+            // printf("root: %.16lf, diff: %.16lf\n", root, fabs(poly.coefficients[0] + root * a_n[0]));
+            if (!isfinite(root) || fabs(poly.coefficients[0] + root * a_n[0]) > (diff * 10)) {
+                isRoot = false;
+            }
+
+            if (isRoot) {
+                poly.degree -= 1;
+                for (int i = poly.degree; i >= 0; i--) {
+                    poly.coefficients[i] = a_n[i];
+                }
+            }
 
             if (degree != poly.degree) {
                 roots[rootIndex] = guesses[j];
@@ -161,7 +234,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         // }
 
         // printf("test 7\n");
-        derivative(poly, &polyDeriv);
+        // derivative(poly, &polyDeriv);
         if (notFinite) {
             vGuesses = vle64_v_f64m1(guesses, guessSize);
         }
