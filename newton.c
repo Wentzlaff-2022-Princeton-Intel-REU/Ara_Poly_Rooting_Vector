@@ -33,7 +33,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     }
     // printf("test -1.0\n");
 
-    size_t guessSize = 8;
+    size_t guessSize = vsetvlmax_e32m1();
     // printf("test -1.1\n");
 
     double guesses[guessSize];
