@@ -68,7 +68,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     int rootIndex = 0;
     while (poly.degree > 0) {
         // derivative(poly, &polyDeriv);
-        printf("test -1.5\n");
+        // printf("test -1.5\n");
 
         // pointers for the resulting coefficients (after taking the derivative) and the
         // original coefficients
@@ -100,7 +100,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
             // move the pointers
             coeffs += vl;
-            indices += vl;
+            *indices += vl;
             results += vl;
         }
 
@@ -110,7 +110,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         bool firstLoop = true;
         // printf("test -1.6\n");
         do {
-            printf("test 1\n");
+            // printf("test 1\n");
             // bool noRoots = true;
 
             // printf("test 2\n");
@@ -180,7 +180,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             long noMoreRoots = vfirst_m_b64(vmnand_mm_b64(greaterDiff, greaterThan1, guessSize), guessSize);
 
             if (poly.degree % 2 == 0 && !firstLoop && noMoreRoots == -1) {
-                printf("exit to early\n");
+                // printf("exit to early\n");
                 qsort(roots, rootIndex + 1, sizeof(double), compare);
                 return;
             }
