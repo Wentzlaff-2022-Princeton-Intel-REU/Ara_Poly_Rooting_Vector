@@ -200,10 +200,10 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             firstLoop = false;
         } while (true);
 
-        // printf("test 5\n");
         vse64_v_f64m1(guesses, vGuesses, guessSize);
         bool notFinite = false;
         for (size_t j = 0; j < guessSize; j++) {
+            printf("test 5\n");
             int degree = poly.degree;
             // longDiv(&poly, a_n, guesses[j], convCrit);
 
