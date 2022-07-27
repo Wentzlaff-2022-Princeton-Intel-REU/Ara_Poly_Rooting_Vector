@@ -31,10 +31,10 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     for (int i = 0; i < n; i++) {
       roots[i] = DBL_MAX;
     }
-    printf("test -1.0\n");
+    // printf("test -1.0\n");
 
-    size_t guessSize = vsetvlmax_e32m1();
-    printf("test -1.1\n");
+    size_t guessSize = 8;
+    // printf("test -1.1\n");
 
     double guesses[guessSize];
     for (int i = 0; i < guessSize; i++) {
@@ -44,26 +44,26 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     // double* diff[guessSize];
     // double* oldDiff[guessSize];
 
-    printf("test -1.2\n");
+    // printf("test -1.2\n");
 
     vfloat64m1_t vGuesses, vOldGuesses, vDiff, vOldDiff;
-    printf("test -1.2.1\n");
+    // printf("test -1.2.1\n");
     // vuint64m1_t test = vid_v_u64m1(guessSize);
     // vfloat64m1_t test2 = vreinterpret_v_u64m1_f64m1(test);
     // printf("test -1.2.1.1\n");
     vGuesses = vle64_v_f64m1(guesses, guessSize);
-    printf("test -1.2.2\n");
+    // printf("test -1.2.2\n");
     vOldGuesses = vfmv_v_f_f64m1(0, guessSize);
-    printf("test -1.2.3\n");
+    // printf("test -1.2.3\n");
     vDiff = vGuesses;
-    printf("test -1.2.4\n");
+    // printf("test -1.2.4\n");
     vOldDiff = vOldGuesses;
-    printf("test -1.3\n");
+    // printf("test -1.3\n");
 
     Polynomial_t polyDeriv;
     double a_n[n + 1];
     polyDeriv.coefficients = a_n;
-    printf("test -1.4\n");
+    // printf("test -1.4\n");
     derivative(poly, &polyDeriv);
 
     int rootIndex = 0;
