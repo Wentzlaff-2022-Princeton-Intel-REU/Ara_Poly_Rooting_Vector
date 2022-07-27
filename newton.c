@@ -64,11 +64,11 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
     double a_n[n + 1];
     polyDeriv.coefficients = a_n;
     // printf("test -1.4\n");
+    derivative(poly, &polyDeriv);
 
     int rootIndex = 0;
     printf("test -1.5\n");
     while (poly.degree > 0) {
-        derivative(poly, &polyDeriv);
         // printf("test 0\n");
         // bool cond = true;
         // long cond = 0;
@@ -162,7 +162,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         // }
 
         // printf("test 7\n");
-        // derivative(poly, &polyDeriv);
+        derivative(poly, &polyDeriv);
         if (notFinite) {
             vGuesses = vle64_v_f64m1(guesses, guessSize);
         }
