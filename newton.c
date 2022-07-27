@@ -73,7 +73,7 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
         // bool cond = true;
         // long cond = 0;
         bool firstLoop = true;
-        printf("test -1.6\n");
+        // printf("test -1.6\n");
         do {
             // printf("test 1\n");
             // bool noRoots = true;
