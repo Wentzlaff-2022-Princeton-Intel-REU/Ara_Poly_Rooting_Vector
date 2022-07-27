@@ -72,19 +72,19 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
 
         // pointers for the resulting coefficients (after taking the derivative) and the
         // original coefficients
-        polyDeriv.degree = myPoly.degree - 1;
+        polyDeriv.degree = poly.degree - 1;
         double* results = polyDeriv.coefficients;
-        double* coeffs = myPoly.coefficients + 1; // the constant at index 0 is not included in the derivative
+        double* coeffs = poly.coefficients + 1; // the constant at index 0 is not included in the derivative
 
         // array that just holds 1 to n, where n is the degree of the original polynomial.
         // this represents the exponents of the polynomial
-        double indices[myPoly.degree];
-        for(int i = 0; i < myPoly.degree; i++){
+        double indices[poly.degree];
+        for(int i = 0; i < poly.degree; i++){
             indices[i] = i + 1;
         }
 
         //active vector length is the degree of the original polynomial
-        size_t avl = myPoly.degree;
+        size_t avl = poly.degree;
         // declare vector registers
         vfloat64m1_t vCoeffs, vIndices, vResults;
 
