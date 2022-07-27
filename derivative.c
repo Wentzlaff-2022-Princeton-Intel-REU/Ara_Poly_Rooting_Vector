@@ -8,7 +8,7 @@
 
 /*--------------------------------------------------------------------*/
 
-inline __attribute__((always_inline)) void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
+inline void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly) {
     // pointers for the resulting coefficients (after taking the derivative) and the
     // original coefficients
     differentiatedPoly->degree = myPoly.degree - 1;

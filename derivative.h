@@ -9,5 +9,4 @@
 
 /* The derivative function takes in a Polynomial_t
 object as input and set differentiatedPoly to its derivative. */
-inline __attribute__((always_inline)) void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly);
-
+void derivative(Polynomial_t myPoly, Polynomial_t* differentiatedPoly);
