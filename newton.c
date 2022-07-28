@@ -123,26 +123,25 @@ void newton(Polynomial_t poly, double* roots, double convCrit) {
             vfloat64m1_t currCoeff, currCoeffDeriv;
             // printf("test -1.9\n");
 
-            for (size_t vl; (vl = vsetvl_e32m1(guessSize)) > 0; guessSize -= vl) {
-                // filling the vector solutions with the coefficient of the high degree
-                polyGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
-                polyDerivGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], vl);
-                // printf("test -1.10\n");
+            // filling the vector solutions with the coefficient of the high degree
+            polyGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], guessSize);
+            polyDerivGuess = vfmv_v_f_f64m1(poly.coefficients[poly.degree], guessSize);
+            // printf("test -1.10\n");
 
-                for (int i = poly.degree; i > 0; i--){
-                    /* moves g one of the polynomial's coefficients
-                    (starting with the coefficient of the second high degree and
-                    moving to that of the lowest degree) to a vector */
-                    currCoeff = vfmv_v_f_f64m1(poly.coefficients[i-1], vl);
-                    currCoeffDeriv = vfmv_v_f_f64m1(poly.coefficients[i-1], vl);
-                    // printf("test -1.11\n");
-                    // solutions += vGuesses * currCoeff
-                    polyGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, vl);
-                    polyDerivGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, vl);
+            for (int i = poly.degree; i > 0; i--){
+                /* moves g one of the polynomial's coefficients
+                (starting with the coefficient of the second high degree and
+                moving to that of the lowest degree) to a vector */
+                currCoeff = vfmv_v_f_f64m1(poly.coefficients[i-1], guessSize);
+                currCoeffDeriv = vfmv_v_f_f64m1(poly.coefficients[i-1], guessSize);
+                // printf("test -1.11\n");
+                // solutions += vGuesses * currCoeff
+                polyGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, guessSize);
+                polyDerivGuess = vfmadd_vv_f64m1(polyGuess, vGuesses, currCoeff, guessSize);
 
-                    // printf("test -1.12\n");
-                }
+                // printf("test -1.12\n");
             }
+        
 
             // printf("test -1.9\n");
 
