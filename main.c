@@ -3,7 +3,6 @@
 /*--------------------------------------------------------------------*/
 
 #include <float.h>
-// #include <stdio.h>
 #include "newton.h"
 #include "printf.h"
 #include "printPoly.h"
@@ -36,7 +35,7 @@ int main() {
             if (roots[i] == DBL_MAX) {
                 break;
             }
-            printf("The root approximation is: %.3f\n", roots[i]);
+            printf("The root approximation is: %.18f\n", roots[i]);
         }
     }
 

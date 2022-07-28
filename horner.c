@@ -3,7 +3,6 @@
 /*--------------------------------------------------------------------*/
 
 #include <riscv_vector.h>
-// #include <stdio.h>
 #include "horner.h"
 #include "printf.h"
 

@@ -2,7 +2,6 @@
 /* newton.c                                                           */
 /*--------------------------------------------------------------------*/
 
-// #include <stdio.h>
 #include "printf.h"
 #include "printPoly.h"
 
