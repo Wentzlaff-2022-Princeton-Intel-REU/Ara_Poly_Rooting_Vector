@@ -17,7 +17,7 @@ int main() {
     poly.coefficients = arr;
 
     double roots[poly.degree];
-    double crit_conversion = 1e-14;
+    double crit_conversion = 1e-10;
 
     printf("Polynomial:\n");
     printPoly(poly);
