@@ -12,8 +12,8 @@
 
 int main() {
     Polynomial_t poly;
-    poly.degree = 3;
-    double arr[] = {12, -6, -4, 2};
+    poly.degree = 7;
+    double arr[] = {54,-36,-73.5,49,21,-14,-1.5,1};
     poly.coefficients = arr;
 
     double roots[poly.degree];
